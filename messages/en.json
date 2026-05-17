@@ -1,0 +1,10 @@
+{
+  "nav": {
+    "home": "Home",
+    "write": "Write",
+    "myPosts": "My Posts",
+    "profile": "Profile",
+    "signIn": "Sign In",
+    "signOut": "Sign Out"
+  }
+}

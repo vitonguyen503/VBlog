@@ -1,0 +1,18 @@
+import { Header } from "@/components/ui/header";
+import { Footer } from "@/components/ui/footer";
+
+export default function PublicLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="flex min-h-screen flex-col">
+      <Header />
+      <main className="flex-1 mx-auto w-full max-w-5xl px-4 py-8">
+        {children}
+      </main>
+      <Footer />
+    </div>
+  );
+}
