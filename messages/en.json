@@ -1,10 +1,74 @@
 {
-  "nav": {
-    "home": "Home",
-    "write": "Write",
-    "myPosts": "My Posts",
+  "nav": { "home": "Home" },
+  "userMenu": {
+    "write": "New post",
+    "myPosts": "My posts",
     "profile": "Profile",
-    "signIn": "Sign In",
-    "signOut": "Sign Out"
-  }
+    "signOut": "Sign out",
+    "signIn": "Sign in"
+  },
+  "auth": {
+    "signInWithGoogle": "Sign in with Google",
+    "signingIn": "Signing in..."
+  },
+  "home": {
+    "title": "Latest posts",
+    "noPosts": "No posts yet."
+  },
+  "post": {
+    "readTime": "{n} min read"
+  },
+  "comment": {
+    "title": "Comments",
+    "count": "{n} comments",
+    "loading": "Loading comments...",
+    "empty": "No comments yet. Be the first!",
+    "placeholder": "Write a comment...",
+    "send": "Send",
+    "sending": "Sending...",
+    "cancel": "Cancel",
+    "reply": "Reply",
+    "delete": "Delete",
+    "deleting": "Deleting...",
+    "loginCta": "Sign in",
+    "loginSuffix": "to comment."
+  },
+  "time": {
+    "justNow": "just now",
+    "minutesAgo": "{n}m ago",
+    "hoursAgo": "{n}h ago",
+    "daysAgo": "{n}d ago",
+    "weeksAgo": "{n}w ago",
+    "monthsAgo": "{n}mo ago",
+    "today": "Today",
+    "yesterday": "Yesterday"
+  },
+  "editor": {
+    "newPost": "New post",
+    "editPost": "Edit post",
+    "category": "Category",
+    "noCategory": "— None —",
+    "language": "Language",
+    "tags": "Tags",
+    "tagsHint": "(comma separated)",
+    "excerpt": "Excerpt",
+    "excerptHint": "(optional, max 300 chars)",
+    "excerptPlaceholder": "Short description...",
+    "saveDraft": "Save draft",
+    "saving": "Saving...",
+    "publish": "Publish",
+    "delete": "Delete post",
+    "processing": "Processing...",
+    "draftBadge": "Draft — not published",
+    "publishedBadge": "Published"
+  },
+  "myPosts": {
+    "title": "My posts",
+    "newPost": "+ New post",
+    "noPosts": "No posts yet.",
+    "startWriting": "Start writing",
+    "draft": "Draft",
+    "published": "Published"
+  },
+  "locale": { "vi": "Tiếng Việt", "en": "English", "ja": "日本語" }
 }

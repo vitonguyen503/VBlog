@@ -1,38 +1,42 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = { title: "Bài của tôi" };
+export const metadata: Metadata = { title: "My Posts" };
 
 export default async function MyPostsPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/login?next=/my-posts");
 
-  const { data: posts } = await supabase
-    .from("posts")
-    .select("id, title, status, language, created_at")
-    .eq("author_id", user.id)
-    .order("created_at", { ascending: false });
+  const [{ data: posts }, t] = await Promise.all([
+    supabase
+      .from("posts")
+      .select("id, title, status, language, created_at")
+      .eq("author_id", user.id)
+      .order("created_at", { ascending: false }),
+    getTranslations("myPosts"),
+  ]);
 
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">Bài của tôi</h1>
+        <h1 className="text-2xl font-bold">{t("title")}</h1>
         <Link
           href="/write"
           className="rounded-lg bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-3 py-1.5 text-sm font-medium hover:opacity-90"
         >
-          + Viết bài mới
+          {t("newPost")}
         </Link>
       </div>
 
       {!posts?.length ? (
         <p className="text-gray-500 dark:text-gray-400">
-          Chưa có bài viết nào.{" "}
+          {t("noPosts")}{" "}
           <Link href="/write" className="underline">
-            Bắt đầu viết ngay
+            {t("startWriting")}
           </Link>
           !
         </p>
@@ -79,7 +83,7 @@ export default async function MyPostsPage() {
                       : "bg-green-100 text-green-700 dark:bg-green-950 dark:text-green-400"
                   }`}
                 >
-                  {isDraft ? "Nháp" : "Đã đăng"}
+                  {isDraft ? t("draft") : t("published")}
                 </span>
               </div>
             );
@@ -89,4 +93,3 @@ export default async function MyPostsPage() {
     </div>
   );
 }
-

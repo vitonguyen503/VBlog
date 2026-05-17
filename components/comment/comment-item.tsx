@@ -2,22 +2,10 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import type { CommentWithProfile } from "@/lib/queries/comment.queries";
 import { deleteComment } from "@/lib/actions/comment.actions";
 import { CommentForm } from "./comment-form";
-
-function relativeTime(date: string | null): string {
-  if (!date) return "";
-  const diff = Date.now() - new Date(date).getTime();
-  const mins = Math.floor(diff / 60_000);
-  if (mins < 1) return "vừa xong";
-  if (mins < 60) return `${mins} phút trước`;
-  const hours = Math.floor(mins / 60);
-  if (hours < 24) return `${hours} giờ trước`;
-  const days = Math.floor(hours / 24);
-  if (days < 30) return `${days} ngày trước`;
-  return new Date(date).toLocaleDateString("vi-VN");
-}
 
 type Props = {
   comment: CommentWithProfile;
@@ -40,6 +28,21 @@ export function CommentItem({
 }: Props) {
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const t = useTranslations("comment");
+  const tTime = useTranslations("time");
+
+  const relativeTime = (date: string | null): string => {
+    if (!date) return "";
+    const diff = Date.now() - new Date(date).getTime();
+    const mins = Math.floor(diff / 60_000);
+    if (mins < 1) return tTime("justNow");
+    if (mins < 60) return tTime("minutesAgo", { n: mins });
+    const hours = Math.floor(mins / 60);
+    if (hours < 24) return tTime("hoursAgo", { n: hours });
+    const days = Math.floor(hours / 24);
+    if (days < 30) return tTime("daysAgo", { n: days });
+    return new Date(date).toLocaleDateString();
+  };
 
   const displayName =
     comment.profiles?.display_name ?? comment.profiles?.username ?? "Ẩn danh";
@@ -93,7 +96,7 @@ export function CommentItem({
                 onClick={() => setShowReplyForm((v) => !v)}
                 className="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
               >
-                {showReplyForm ? "Hủy" : "Trả lời"}
+                {showReplyForm ? t("cancel") : t("reply")}
               </button>
             )}
             {canDelete && (
@@ -102,7 +105,7 @@ export function CommentItem({
                 disabled={isDeleting}
                 className="text-xs text-red-400 hover:text-red-600 disabled:opacity-50 transition-colors"
               >
-                {isDeleting ? "Đang xóa..." : "Xóa"}
+                {isDeleting ? t("deleting") : t("delete")}
               </button>
             )}
           </div>

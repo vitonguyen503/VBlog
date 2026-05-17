@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import type { JSONContent } from "@tiptap/react";
 import type { Category } from "@/lib/types/database";
 import { Editor } from "./editor";
@@ -25,6 +26,7 @@ export function PostForm({ postId, initialData, categories }: Props) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
+  const t = useTranslations("editor");
 
   const [title, setTitle] = useState(initialData?.title ?? "");
   const [content, setContent] = useState<JSONContent | null>(
@@ -108,7 +110,7 @@ export function PostForm({ postId, initialData, categories }: Props) {
                 currentStatus === "published" ? "bg-green-500" : "bg-amber-400"
               }`}
             />
-            {currentStatus === "published" ? "Đã đăng" : "Bản nháp — chưa công khai"}
+            {currentStatus === "published" ? t("publishedBadge") : t("draftBadge")}
           </span>
         </div>
       )}
@@ -134,20 +136,20 @@ export function PostForm({ postId, initialData, categories }: Props) {
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="space-y-1">
-          <label className="block text-xs font-medium text-gray-500">Danh mục</label>
+          <label className="block text-xs font-medium text-gray-500">{t("category")}</label>
           <select
             value={categoryId}
             onChange={(e) => setCategoryId(e.target.value)}
             className="w-full rounded border border-gray-300 dark:border-gray-700 bg-transparent px-2 py-1.5 text-sm"
           >
-            <option value="">— Không có —</option>
+            <option value="">{t("noCategory")}</option>
             {categories.map((c) => (
               <option key={c.id} value={c.id}>{c.name}</option>
             ))}
           </select>
         </div>
         <div className="space-y-1">
-          <label className="block text-xs font-medium text-gray-500">Ngôn ngữ</label>
+          <label className="block text-xs font-medium text-gray-500">{t("language")}</label>
           <select
             value={language}
             onChange={(e) => setLanguage(e.target.value as "vi" | "en" | "ja")}
@@ -160,7 +162,7 @@ export function PostForm({ postId, initialData, categories }: Props) {
         </div>
         <div className="space-y-1">
           <label className="block text-xs font-medium text-gray-500">
-            Tags <span className="font-normal">(phân cách bằng dấu phẩy)</span>
+            {t("tags")} <span className="font-normal">{t("tagsHint")}</span>
           </label>
           <input
             type="text"
@@ -174,14 +176,14 @@ export function PostForm({ postId, initialData, categories }: Props) {
 
       <div className="space-y-1">
         <label className="block text-xs font-medium text-gray-500">
-          Tóm tắt <span className="font-normal">(tùy chọn, tối đa 300 ký tự)</span>
+          {t("excerpt")} <span className="font-normal">{t("excerptHint")}</span>
         </label>
         <textarea
           value={excerpt}
           onChange={(e) => setExcerpt(e.target.value)}
           maxLength={300}
           rows={2}
-          placeholder="Mô tả ngắn về bài viết..."
+          placeholder={t("excerptPlaceholder")}
           className="w-full rounded border border-gray-300 dark:border-gray-700 bg-transparent px-3 py-2 text-sm resize-none focus:outline-none focus:ring-1 focus:ring-gray-400"
         />
       </div>
@@ -193,7 +195,7 @@ export function PostForm({ postId, initialData, categories }: Props) {
           disabled={isPending}
           className="rounded-lg border border-gray-300 dark:border-gray-700 px-4 py-2 text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50 transition-colors"
         >
-          {isPending ? "Đang lưu..." : "Lưu nháp"}
+          {isPending ? t("saving") : t("saveDraft")}
         </button>
         <button
           type="button"
@@ -201,7 +203,7 @@ export function PostForm({ postId, initialData, categories }: Props) {
           disabled={isPending}
           className="rounded-lg bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-4 py-2 text-sm font-medium hover:opacity-90 disabled:opacity-50 transition-opacity"
         >
-          {isPending ? "Đang xử lý..." : "Đăng bài"}
+          {isPending ? t("processing") : t("publish")}
         </button>
         {postId && (
           <button
@@ -210,7 +212,7 @@ export function PostForm({ postId, initialData, categories }: Props) {
             disabled={isPending}
             className="ml-auto text-sm text-red-500 hover:text-red-700 disabled:opacity-50"
           >
-            Xóa bài
+            {t("delete")}
           </button>
         )}
       </div>

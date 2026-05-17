@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import type { User } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/client";
 
@@ -12,6 +13,7 @@ export function UserMenu() {
   const [mounted, setMounted] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const t = useTranslations("userMenu");
 
   useEffect(() => {
     setMounted(true);
@@ -54,7 +56,7 @@ export function UserMenu() {
         href="/login"
         className="rounded-md px-3 py-1.5 text-sm font-medium bg-gray-900 text-white dark:bg-white dark:text-gray-900 hover:opacity-90 transition-opacity"
       >
-        Đăng nhập
+        {t("signIn")}
       </Link>
     );
   }
@@ -94,28 +96,28 @@ export function UserMenu() {
             onClick={() => setOpen(false)}
             className="flex px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800"
           >
-            Viết bài mới
+            {t("write")}
           </Link>
           <Link
             href="/my-posts"
             onClick={() => setOpen(false)}
             className="flex px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800"
           >
-            Bài của tôi
+            {t("myPosts")}
           </Link>
           <Link
             href="/profile"
             onClick={() => setOpen(false)}
             className="flex px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800"
           >
-            Hồ sơ
+            {t("profile")}
           </Link>
           <div className="border-t border-gray-100 dark:border-gray-800 mt-1 pt-1">
             <button
               onClick={handleSignOut}
               className="w-full text-left px-3 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-50 dark:hover:bg-gray-800"
             >
-              Đăng xuất
+              {t("signOut")}
             </button>
           </div>
         </div>

@@ -1,8 +1,11 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 
 export function LoginForm({ next }: { next: string }) {
+  const t = useTranslations("auth");
+
   const handleGoogleLogin = async () => {
     const supabase = createClient();
     await supabase.auth.signInWithOAuth({
@@ -19,7 +22,7 @@ export function LoginForm({ next }: { next: string }) {
       className="w-full flex items-center justify-center gap-3 rounded-lg border border-gray-300 dark:border-gray-700 px-4 py-3 text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
     >
       <GoogleIcon />
-      Đăng nhập với Google
+      {t("signInWithGoogle")}
     </button>
   );
 }

@@ -1,10 +1,74 @@
 {
-  "nav": {
-    "home": "Trang chủ",
-    "write": "Viết bài",
+  "nav": { "home": "Trang chủ" },
+  "userMenu": {
+    "write": "Viết bài mới",
     "myPosts": "Bài của tôi",
     "profile": "Hồ sơ",
-    "signIn": "Đăng nhập",
-    "signOut": "Đăng xuất"
-  }
+    "signOut": "Đăng xuất",
+    "signIn": "Đăng nhập"
+  },
+  "auth": {
+    "signInWithGoogle": "Đăng nhập với Google",
+    "signingIn": "Đang đăng nhập..."
+  },
+  "home": {
+    "title": "Bài viết mới nhất",
+    "noPosts": "Chưa có bài viết nào."
+  },
+  "post": {
+    "readTime": "{n} phút đọc"
+  },
+  "comment": {
+    "title": "Bình luận",
+    "count": "{n} bình luận",
+    "loading": "Đang tải bình luận...",
+    "empty": "Chưa có bình luận nào. Hãy là người đầu tiên!",
+    "placeholder": "Viết bình luận...",
+    "send": "Gửi",
+    "sending": "Đang gửi...",
+    "cancel": "Hủy",
+    "reply": "Trả lời",
+    "delete": "Xóa",
+    "deleting": "Đang xóa...",
+    "loginCta": "Đăng nhập",
+    "loginSuffix": "để bình luận."
+  },
+  "time": {
+    "justNow": "vừa xong",
+    "minutesAgo": "{n} phút trước",
+    "hoursAgo": "{n} giờ trước",
+    "daysAgo": "{n} ngày trước",
+    "weeksAgo": "{n} tuần trước",
+    "monthsAgo": "{n} tháng trước",
+    "today": "Hôm nay",
+    "yesterday": "Hôm qua"
+  },
+  "editor": {
+    "newPost": "Bài viết mới",
+    "editPost": "Chỉnh sửa bài viết",
+    "category": "Danh mục",
+    "noCategory": "— Không có —",
+    "language": "Ngôn ngữ",
+    "tags": "Tags",
+    "tagsHint": "(phân cách bằng dấu phẩy)",
+    "excerpt": "Tóm tắt",
+    "excerptHint": "(tùy chọn, tối đa 300 ký tự)",
+    "excerptPlaceholder": "Mô tả ngắn về bài viết...",
+    "saveDraft": "Lưu nháp",
+    "saving": "Đang lưu...",
+    "publish": "Đăng bài",
+    "delete": "Xóa bài",
+    "processing": "Đang xử lý...",
+    "draftBadge": "Bản nháp — chưa công khai",
+    "publishedBadge": "Đã đăng"
+  },
+  "myPosts": {
+    "title": "Bài của tôi",
+    "newPost": "+ Viết bài mới",
+    "noPosts": "Chưa có bài viết nào.",
+    "startWriting": "Bắt đầu viết ngay",
+    "draft": "Nháp",
+    "published": "Đã đăng"
+  },
+  "locale": { "vi": "Tiếng Việt", "en": "English", "ja": "日本語" }
 }

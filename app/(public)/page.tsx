@@ -1,5 +1,6 @@
 import { getPosts } from "@/lib/queries/post.queries";
 import { getCategories } from "@/lib/queries/category.queries";
+import { getTranslations } from "next-intl/server";
 import { PostList } from "@/components/blog/post-list";
 import { Pagination } from "@/components/blog/pagination";
 import Link from "next/link";
@@ -17,15 +18,16 @@ export default async function HomePage({
   const { page: pageStr } = await searchParams;
   const page = Math.max(1, parseInt(pageStr ?? "1", 10) || 1);
 
-  const [{ posts, total, pageSize }, categories] = await Promise.all([
+  const [{ posts, total, pageSize }, categories, t] = await Promise.all([
     getPosts(page),
     getCategories(),
+    getTranslations("home"),
   ]);
 
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Bài viết mới nhất</h1>
+        <h1 className="text-2xl font-bold">{t("title")}</h1>
         <div className="flex flex-wrap gap-2">
           {categories.map((cat) => (
             <Link
@@ -44,4 +46,3 @@ export default async function HomePage({
     </div>
   );
 }
-

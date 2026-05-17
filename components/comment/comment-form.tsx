@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { useTranslations } from "next-intl";
 import { addComment } from "@/lib/actions/comment.actions";
 import type { CommentWithProfile } from "@/lib/queries/comment.queries";
 
@@ -18,6 +19,7 @@ export function CommentForm({ postId, parentId, placeholder, onSuccess, onCancel
   const [content, setContent] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+  const t = useTranslations("comment");
 
   const handleSubmit = () => {
     if (!content.trim() || content.length > MAX_LEN) return;
@@ -28,7 +30,7 @@ export function CommentForm({ postId, parentId, placeholder, onSuccess, onCancel
         setContent("");
         onSuccess(comment);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Lỗi khi gửi bình luận");
+        setError(err instanceof Error ? err.message : t("placeholder"));
       }
     });
   };
@@ -40,7 +42,7 @@ export function CommentForm({ postId, parentId, placeholder, onSuccess, onCancel
       <textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
-        placeholder={placeholder ?? "Viết bình luận..."}
+        placeholder={placeholder ?? t("placeholder")}
         rows={3}
         className="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-transparent px-3 py-2 text-sm resize-none focus:outline-none focus:ring-1 focus:ring-gray-400"
       />
@@ -54,7 +56,7 @@ export function CommentForm({ postId, parentId, placeholder, onSuccess, onCancel
               onClick={onCancel}
               className="text-xs text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 px-2 py-1"
             >
-              Hủy
+              {t("cancel")}
             </button>
           )}
           <button
@@ -62,7 +64,7 @@ export function CommentForm({ postId, parentId, placeholder, onSuccess, onCancel
             disabled={!content.trim() || overLimit || isPending}
             className="text-xs px-3 py-1.5 rounded-lg bg-gray-900 dark:bg-white text-white dark:text-gray-900 disabled:opacity-40 hover:opacity-90 transition-opacity"
           >
-            {isPending ? "Đang gửi..." : "Gửi"}
+            {isPending ? t("sending") : t("send")}
           </button>
         </div>
       </div>

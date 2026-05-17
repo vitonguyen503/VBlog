@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import type { PostDetail } from "@/lib/queries/post.queries";
 import { TagBadge } from "./tag-badge";
 import { estimateReadTime } from "@/lib/queries/post.queries";
@@ -8,9 +9,10 @@ const LANG_LABEL: Record<string, string> = { vi: "Tiếng Việt", en: "English"
 
 type Props = { post: PostDetail };
 
-export function PostHeader({ post }: Props) {
+export async function PostHeader({ post }: Props) {
   const tags = post.post_tags.flatMap((pt) => (pt.tags ? [pt.tags] : []));
   const readTime = estimateReadTime(post.content_json);
+  const t = await getTranslations("post");
 
   return (
     <header className="mb-8 space-y-4">
@@ -61,7 +63,7 @@ export function PostHeader({ post }: Props) {
                 })
               : ""}
             {" · "}
-            {readTime} phút đọc
+            {t("readTime", { n: readTime })}
           </span>
         </div>
       </div>

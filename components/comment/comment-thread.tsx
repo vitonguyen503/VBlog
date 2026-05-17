@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/lib/supabase/client";
 import type { CommentWithProfile } from "@/lib/queries/comment.queries";
 import { CommentItem } from "./comment-item";
@@ -19,6 +20,7 @@ type Props = {
 export function CommentThread({ postId, postAuthorId, currentUserId }: Props) {
   const [comments, setComments] = useState<CommentWithProfile[]>([]);
   const [loading, setLoading] = useState(true);
+  const t = useTranslations("comment");
 
   useEffect(() => {
     const supabase = createClient();
@@ -48,17 +50,15 @@ export function CommentThread({ postId, postAuthorId, currentUserId }: Props) {
   return (
     <section className="mt-12 pt-8 border-t border-gray-100 dark:border-gray-800 space-y-8">
       <h2 className="text-lg font-semibold">
-        {loading ? "Bình luận" : `${comments.length} bình luận`}
+        {loading ? t("title") : t("count", { n: comments.length })}
       </h2>
 
       {loading ? (
-        <p className="text-sm text-gray-400 animate-pulse">Đang tải bình luận...</p>
+        <p className="text-sm text-gray-400 animate-pulse">{t("loading")}</p>
       ) : (
         <div className="space-y-6">
           {topLevel.length === 0 && (
-            <p className="text-sm text-gray-400">
-              Chưa có bình luận nào. Hãy là người đầu tiên!
-            </p>
+            <p className="text-sm text-gray-400">{t("empty")}</p>
           )}
           {topLevel.map((comment) => (
             <CommentItem
@@ -84,9 +84,9 @@ export function CommentThread({ postId, postAuthorId, currentUserId }: Props) {
               href="/login"
               className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
             >
-              Đăng nhập
+              {t("loginCta")}
             </Link>{" "}
-            để bình luận.
+            {t("loginSuffix")}
           </p>
         )}
       </div>

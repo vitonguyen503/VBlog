@@ -1,25 +1,27 @@
 import Image from "next/image";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import type { PostListItem } from "@/lib/queries/post.queries";
 import { TagBadge } from "./tag-badge";
 
 const LANG_LABEL: Record<string, string> = { vi: "VI", en: "EN", ja: "JA" };
 
-function relativeTime(date: string): string {
-  const diff = Date.now() - new Date(date).getTime();
-  const days = Math.floor(diff / 86_400_000);
-  if (days === 0) return "Hôm nay";
-  if (days === 1) return "Hôm qua";
-  if (days < 7) return `${days} ngày trước`;
-  if (days < 30) return `${Math.floor(days / 7)} tuần trước`;
-  if (days < 365) return `${Math.floor(days / 30)} tháng trước`;
-  return `${Math.floor(days / 365)} năm trước`;
-}
-
 type Props = { post: PostListItem };
 
-export function PostCard({ post }: Props) {
+export async function PostCard({ post }: Props) {
+  const t = await getTranslations("time");
   const tags = post.post_tags.flatMap((pt) => (pt.tags ? [pt.tags] : []));
+
+  const relativeTime = (date: string): string => {
+    const diff = Date.now() - new Date(date).getTime();
+    const days = Math.floor(diff / 86_400_000);
+    if (days === 0) return t("today");
+    if (days === 1) return t("yesterday");
+    if (days < 7) return t("daysAgo", { n: days });
+    if (days < 30) return t("weeksAgo", { n: Math.floor(days / 7) });
+    if (days < 365) return t("monthsAgo", { n: Math.floor(days / 30) });
+    return new Date(date).toLocaleDateString();
+  };
 
   return (
     <article className="flex flex-col rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden hover:shadow-md dark:hover:shadow-gray-900 transition-shadow">
