@@ -1,0 +1,15 @@
+#!/bin/sh
+BRANCH=$(git branch --show-current)
+ID=$(echo "$BRANCH" | grep -oE '[0-9]+' | head -1)
+COMMIT_FILE=$1
+COMMIT_TYPE=$2
+
+# Không xử lý khi merge/squash/rebase
+if [ "$COMMIT_TYPE" = "merge" ] || [ "$COMMIT_TYPE" = "squash" ] || [ "$COMMIT_TYPE" = "commit" ]; then
+  exit 0
+fi
+
+# Chỉ thêm nếu chưa có #ID và lấy được ID từ branch
+if [ -n "$ID" ] && ! grep -q "#$ID" "$COMMIT_FILE"; then
+  sed -i.bak "1s/^/#$ID /" "$COMMIT_FILE"
+fi
